@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+    msg:<input id="message" onKeyup="typing()" type="text" ><input onclick="envoye()" type="submit"> 
+        <script>
+            const socket = io.connect();
+
+            nomuser=prompt("Tapez votre nom :")
+            socket.on("x",(data)=>{
+                 t=document.createElement("p")
+                 t.innerText=("is typing ...")
+                document.body.append(t)
+
+            })
+
+
+             socket.on('userDeleted', function(data) {
+                console.log('User with ID ' + data.userId + ' has been deleted.');
+                // Perform any desired actions with the received data
+            });
+
+
+            socket.on("msg",(data) =>{
+                s=document.createElement("p")
+                s.innerText=(nomuser + ":" + data)
+                document.body.append(s)
+                n=document.getElementById("message")
+                })
+                function envoye(){
+                    console.log("message:"+n.value)
+                    console.log("message:"+nomuser)
+
+                    socket.emit("msg",n.value)
+
+                }
+                function typing(){
+                    socket.emit("x",nomuser)
+
+                }
+            
+        </script>
+    </body>
+</html>
